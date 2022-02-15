@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Settings xmlns="https://scott.center/PiUnit">
+	<PollInterval>1000</PollInterval>
+	<ShutdownTimer>10</ShutdownTimer>
+	
+	<GpioList>
+		<Gpio function="Shutdown" enabled="true">3</Gpio>
+	</GpioList>
+</Settings>
