@@ -27,7 +27,7 @@ namespace PiUnit.Client.Functions
 				PendingShutdown = DateTime.Now;
 				Console.WriteLine("Pending shutdown");
 			}
-			else if (DateTime.Now - PendingShutdown >= TimeSpan.FromSeconds(Settings.Global.ShutdownTimer))
+			else if (DateTime.Now - PendingShutdown >= TimeSpan.FromSeconds(Settings.Global.GpioShutdownTimer))
 			{
 				Console.WriteLine("Shutdown time");
 			}

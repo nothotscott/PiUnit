@@ -8,11 +8,15 @@ namespace PiUnit.Client
 {
 	class Program
 	{
+		private static ThreadPriority Priority = ThreadPriority.Highest;
 		private static Client Client;
+
+		private static Thread GpioThread;
+		private static Thread NetworkThread;
 		
 		static void Main(string[] args)
 		{
-			Thread.CurrentThread.Priority = ThreadPriority.Highest;
+			Thread.CurrentThread.Priority = Priority;
 
 			using (FileStream fileStream = File.Open("Settings.xml", FileMode.Open, FileAccess.Read))
 			{
@@ -20,13 +24,26 @@ namespace PiUnit.Client
 				Settings.Global = (Settings)serializer.Deserialize(fileStream);
 				Client = new Client();
 			}
-			
-			while (Client.Loop())
-			{
-				Thread.Sleep(Settings.Global.PollInterval);
-			}
 
-			Client.Dispose();
+			GpioThread = new Thread(() =>
+			{
+				while (Client.GpioLoop())
+				{
+					Thread.Sleep(Settings.Global.GpioPollInterval);
+				}
+			});
+			GpioThread.Priority = Priority;
+			GpioThread.Start();
+
+			NetworkThread = new Thread(() =>
+			{
+				while (Client.NetworkLoop())
+				{
+					Thread.Sleep(Settings.Global.NetworkSendInterval);
+				}
+			});
+			NetworkThread.Priority = Priority;
+			NetworkThread.Start();
 		}
 	}
 }

@@ -13,9 +13,15 @@ namespace PiUnit.Client
 	{
 		public static Settings Global;
 
-		public int PollInterval { get; set; }
+		public int NetworkSendInterval { get; set; }
 
-		public int ShutdownTimer { get; set; }
+		public string NetworkHost { get; set; }
+
+		public int NetworkPort { get; set; }
+
+		public int GpioPollInterval { get; set; }
+
+		public int GpioShutdownTimer { get; set; }
 
 		[XmlArray]
 		[XmlArrayItem(ElementName = "Gpio")]

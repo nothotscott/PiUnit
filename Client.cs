@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-
+using System.Net.Sockets;
 using System.Device.Gpio;
 
 using PiUnit.Client.Functions;
@@ -11,12 +11,22 @@ namespace PiUnit.Client
 {
 	public class Client : IDisposable
 	{
-		private GpioController Controller { get; set; }
 		private List<Function> Functions { get; set; }
+		private GpioController Controller { get; set; }
+		private UdpClient NetworkClient;
 
 		public Client()
 		{
 			Functions = new List<Function>();
+
+			try
+			{
+				NetworkClient = new UdpClient(Settings.Global.NetworkHost, Settings.Global.NetworkPort);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
 
 			try
 			{
@@ -58,32 +68,47 @@ namespace PiUnit.Client
 			}
 		}
 
-		public bool Loop()
+		public bool NetworkLoop()
 		{
-			if (Controller != null)
+			if (NetworkClient == null)
 			{
-				foreach (Function function in Functions)
+				return false;
+			}
+
+			//NetworkClient.Send();
+
+			return true;
+		}
+
+		public bool GpioLoop()
+		{
+			if (Controller == null)
+			{
+				return false;
+			}
+
+			foreach (Function function in Functions)
+			{
+				if (function.GetType().IsSubclassOf(typeof(GpioFunction)))
 				{
-					if (function.GetType().IsSubclassOf(typeof(GpioFunction)))
+					if (function.Probe())
 					{
-						if (function.Probe())
-						{
-							function.DoFunction();
-						}
-						else if (function is ICancellableFunction cancellableFunction)
-						{
-							cancellableFunction.CancelFunction();
-						}
+						function.DoFunction();
+					}
+					else if (function is ICancellableFunction cancellableFunction)
+					{
+						cancellableFunction.CancelFunction();
 					}
 				}
 			}
-
 			return true;
 		}
 
 		public void Dispose()
 		{
 			Controller?.Dispose();
+			NetworkClient?.Close();
+			NetworkClient?.Dispose();
 		}
 	}
 }

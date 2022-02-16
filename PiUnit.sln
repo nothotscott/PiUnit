@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32126.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiUnit", "PiUnit.csproj", "{76CAAE13-8C59-475C-9686-EBCE0A27CF05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiUnit", "PiUnit.csproj", "{76CAAE13-8C59-475C-9686-EBCE0A27CF05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiUnitServer", "..\PiUnitServer\PiUnitServer.csproj", "{78C4597A-21F4-4916-91B1-579F1B6C364A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{76CAAE13-8C59-475C-9686-EBCE0A27CF05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76CAAE13-8C59-475C-9686-EBCE0A27CF05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76CAAE13-8C59-475C-9686-EBCE0A27CF05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78C4597A-21F4-4916-91B1-579F1B6C364A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78C4597A-21F4-4916-91B1-579F1B6C364A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78C4597A-21F4-4916-91B1-579F1B6C364A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78C4597A-21F4-4916-91B1-579F1B6C364A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
