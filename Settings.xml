@@ -6,7 +6,7 @@
 	<NetworkPort>11050</NetworkPort>
 
 	<GpioPollInterval>1000</GpioPollInterval>
-	<GpioShutdownTimer>10</GpioShutdownTimer>
+	<GpioShutdownTimer>1</GpioShutdownTimer>
 	<GpioList>
 		<Gpio function="Shutdown" enabled="true">3</Gpio>
 	</GpioList>

@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Text;
 
 using System.Device.Gpio;
+using System.Runtime.InteropServices;
 
 namespace PiUnit.Client.Functions
 {
 	public class ShutdownFunction : GpioFunction, ICancellableFunction
 	{
+		[DllImport("libc.so.6", SetLastError = true)]
+		private static extern Int32 reboot(Int32 cmd, IntPtr arg);
+		private const Int32 LINUX_REBOOT_CMD_POWER_OFF = 0x4321FEDC;
+
 		private DateTime? PendingShutdown;
 
 		public ShutdownFunction(object configureObject) : base(configureObject)
@@ -29,7 +34,12 @@ namespace PiUnit.Client.Functions
 			}
 			else if (DateTime.Now - PendingShutdown >= TimeSpan.FromSeconds(Settings.Global.GpioShutdownTimer))
 			{
-				Console.WriteLine("Shutdown time");
+				/*int ret = reboot(LINUX_REBOOT_CMD_POWER_OFF, IntPtr.Zero);
+				if (ret == 0 || ret == -1)
+				{
+					Int32 errno = Marshal.GetLastWin32Error();
+					Console.WriteLine("Shutdown error {0}", errno);
+				}*/
 			}
 		}
 
